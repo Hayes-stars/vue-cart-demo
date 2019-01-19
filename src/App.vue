@@ -2,6 +2,24 @@
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
     <HelloWorld msg="Welcome to Your Vue.js App"/>
+
+    <!-- element test -->
+    <form-test :title="titleVar" />
+      <br/>
+    <button-event @eventValue='handleClick' />
+      <br/>
+    <win-demo>
+      <template slot="head">
+        <h3>window</h3>
+      </template>
+      content...
+    <template slot="foot">
+        <h3>window-FOOT</h3>
+      </template>      
+    </win-demo>
+
+    <!-- <el-button>el-button</el-button> -->
+
     <!-- 条件语句 -->
     <!-- <p v-if="showName">{{name}}</p> -->
     <!-- <p>
@@ -10,6 +28,7 @@
     <p>
       <button @click="addGood">加入购物车</button>
     </p> -->
+    
     <!-- 循环语句 -->
     <ul class="goodslist">
       <li v-for="(phone,index) in goodsList" :key="phone.id">
@@ -27,16 +46,28 @@
 <script>
 import HelloWorld from './components/HelloWorld.vue'
 import shopCart from './components/shopcart.vue'
+import formTest from './components/formTest.vue';
+import buttonEvent from './components/buttonEvent.vue';
+import winDemo from './components/winDemo.vue';
 import axios from 'axios'
 
 export default {
   name: 'app',
+  // provide(){ 
+  //   return {
+  //     someValue: '来自最顶层组件APP.vue'
+  //   }
+  // },
   components: {
     HelloWorld,
-    shopCart
+    shopCart,
+    formTest,
+    buttonEvent,
+    winDemo
   },
   data () {
     return {
+      titleVar:'element formTest 表单',
       name: '购物车Demo',
       showName: false,
       goodsList:[
@@ -98,6 +129,12 @@ export default {
       //   })
       // }
       
+    },
+    addCart(good) {
+      this.$bus.$emit('addCart', good);
+    },
+    handleClick(obj) {
+      console.log(obj);      
     }
   }
 }
